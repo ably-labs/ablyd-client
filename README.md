@@ -35,7 +35,7 @@ var ablydClient = new AblyDClient(clientOptionsObject);
 Assuming you have an AblyD instance running on the same app as the auth details provided, you can start a process on it with:
 
 ```javascript
-ablydClient.startNewProcess(serverID, args, function(err, process) {
+ablydClient.startNewProcess(serverID, args, function(err, ablydProcess) {
     if (err) console.log(err);
 });
 ```
@@ -45,7 +45,7 @@ An error is returned if no active AblyD instances exist which are listening for 
 Alternatively if there's an already active process you'd like to interact with, you can get it with:
 
 ```javascript
-ablydClient.getProcess("process:namespace", function(process) {
+ablydClient.getProcess("process:namespace", function(ablydProcess) {
     ...
 });
 ```
@@ -56,8 +56,8 @@ You can get a list of active processes with:
 
 ```javascript
 // Get all active processes
-ablydClient.getProcesses(function(processes) {
-    processes // [ '382448', '372849', '232498' ]
+ablydClient.getProcesses(function(ablydProcesses) {
+    ablydProcesses // [ '382448', '372849', '232498' ]
 });
 ```
 
@@ -84,10 +84,10 @@ err = ablydClient.subscribe(function (message) {
 
 ```javascript
 // Publish a single message with name and data
-channel.publish('greeting', 'Hello World from client to instance!');
+ablydProcess.publish('greeting', 'Hello World from client to process!');
 
 // Optionally, you can use a callback to be notified of success or failure
-channel.publish('greeting', 'Hello World from client to instance!', function(err) {
+ablyDProcess.publish('greeting', 'Hello World from client to process!', function(err) {
   if(err) {
     console.log('publish failed with error ' + err);
   } else {
@@ -110,8 +110,8 @@ ablydClient.getServerStatuses((err, serverStatuses) {
                       //   data: {
                       //     ServerID: 'c41trvpe008d13aqm8tg',
                       //     Namespace: 'ablyd',
-                      //     MaxInstances: 20,
-                      //     Instances: { '53392': 'Running' }
+                      //     MaxProcesses: 20,
+                      //     Processes: { '53392': 'Running' }
                       //   },
                       //   encoding: null,
                       //   size: undefined

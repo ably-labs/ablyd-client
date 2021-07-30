@@ -2,7 +2,7 @@ const Ably = require('ably');
 const ProcessObject = require('./processObject');
 
 var AblyDClient = (function() {
-    const PROCESS_STARTED_NAME = 'new-instance';
+    const PROCESS_STARTED_NAME = 'new-process';
     const START_PROCESS_NAME = 'start';
 
     function AblyDClient(ablyAuthDetails, namespace = "ablyd") {
@@ -86,9 +86,9 @@ var AblyDClient = (function() {
 
           for (const presenceMember in presenceSet) {
               if (serverID && presenceSet[presenceMember].clientId == serverID) {
-                  return presenceSet[presenceMember].Instances;
+                  return presenceSet[presenceMember].Processes;
               }
-              for (const processes in presenceSet[presenceMember].data.Instances) {
+              for (const processes in presenceSet[presenceMember].data.Processes) {
                   currentProcesses.push(processes);
               }
           }
@@ -110,7 +110,7 @@ var AblyDClient = (function() {
 
           for (const presenceMember in presenceSet) {
               if (!serverID || presenceSet[presenceMember].clientId == serverID) {
-                  for (const processes in presenceSet[presenceMember].data.Instances) {
+                  for (const processes in presenceSet[presenceMember].data.Processes) {
                       currentProcesses.push(`${this.namespace}:${presenceSet[presenceMember].clientId}:${processes}`);
                   }
               }
